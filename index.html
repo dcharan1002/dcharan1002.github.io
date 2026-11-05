@@ -790,7 +790,8 @@ footer .wrap > span{transition:color .2s}
 
 
   // keep name gradient continuous across letters
-  document.querySelectorAll('.nm').forEach(nm=>{const W=nm.getBoundingClientRect().width;nm.querySelectorAll('.ltr').forEach(l=>{l.style.backgroundSize=W+'px 100%';l.style.backgroundPosition=(-(l.offsetLeft))+'px 0'})});
+  const paintName=()=>document.querySelectorAll('.nm').forEach(nm=>{const ws=[...nm.querySelectorAll('.wd')];const lines={};ws.forEach(w=>{const t=Math.round(w.offsetTop);(lines[t]=lines[t]||[]).push(w)});Object.values(lines).forEach(ln=>{const L=ln[0].getBoundingClientRect().left,R=ln[ln.length-1].getBoundingClientRect().right,W=R-L;ln.forEach(w=>w.querySelectorAll('.ltr').forEach(l=>{l.style.backgroundSize=W+'px 100%';l.style.backgroundPosition=(L-l.getBoundingClientRect().left)+'px 0'}))})});
+  paintName();addEventListener('resize',paintName);if(document.fonts)document.fonts.ready.then(paintName);
 
   // hero data network
   const net=document.getElementById('net');
